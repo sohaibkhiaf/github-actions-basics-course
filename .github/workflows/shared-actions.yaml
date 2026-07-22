@@ -1,15 +1,16 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Hello ci cd world
+name: Shared actions example
 
 on: 
   workflow_dispatch:
 
 jobs: 
-  print-hello-cicd-world:
+  checkout-repo:
     runs-on: ubuntu-latest 
 
     steps: 
-      - name: Say ci cd hello 
-        run: echo "Hello ci cd world"
+      - uses: actions/checkout@v2
+
+      - run: ls 
 
