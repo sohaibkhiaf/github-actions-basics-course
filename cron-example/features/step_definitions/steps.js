@@ -1,14 +1,15 @@
 // steps.js
 const pactum = require('pactum');
-const { mock } = require('pactum');
-const { Given, When, Then, Before } = require('@cucumber/cucumber');
+const { spec, mock } = pactum;
+const { Given, When, Then, Before, After } = require('@cucumber/cucumber');
 
-let spec = pactum.spec();
+let request;
 
-Before(() => {
-  spec = pactum.spec();
+// 🔹 Start mock server before each scenario
+Before(async () => {
+  await mock.start(9393);
 
-  // 🔥 Start mock server
+  // Define mock interaction
   mock.addInteraction({
     request: {
       method: 'GET',
@@ -16,21 +17,32 @@ Before(() => {
     },
     response: {
       status: 418,
-      body: 'I am a teapot'
+      body: 'I am a teapot ☕'
     }
   });
+
+  request = spec();
 });
 
-Given('I make a GET request to {string}', function (url) {
-  // 👉 Redirect to local mock server
-  spec.get('http://localhost:9393/status/418');
+// 🔹 Stop mock server after each scenario
+After(async () => {
+  await mock.stop();
 });
 
+// 🔹 Step: make request
+Given('I make a GET request to {string}', function () {
+  // Always hit mock server (ignore external URL)
+  request.get('http://localhost:9393/status/418');
+});
+
+// 🔹 Step: execute request
 When('I receive a response', async function () {
-  await spec.toss();
+  await request.toss();
 });
 
-Then('response should have a status {int}', async function (code) {
-  spec.response().should.have.status(code);
+// 🔹 Step: validate response
+Then('response should have a status {int}', function (code) {
+  request.response().should.have.status(code);
 });
+
 
