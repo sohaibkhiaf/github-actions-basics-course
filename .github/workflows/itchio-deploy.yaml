@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Itchio deploy workflow
+
+on: 
+  pull_request:
+    branches:
+      - master
+    paths:
+      - tic-tac-toe-project/**
+  workflow_dispatch:
+
+jobs: 
+  itchio-deploy:
+    runs-on: ubuntu-latest 
+
+    defaults:
+      run:
+        working-directory: tic-tac-toe-project
+
+    steps: 
+      - uses: actions/checkout@v3
+
+      # Setup Node.js 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: tic-tac-toe-project/yarn.lock
+
+      # Install yarn
+      - name: Install yarn
+        run: npm install --global yarn
+
+      # Install libraries
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # Compile the code 
+      - name: Build project
+        run: yarn build
+
+      - uses: yeslayla/butler-publish-itchio-action@v1.2.0
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.ITCH_IO_API_KEY }}
+          CHANNEL: HTML
+          ITCH_GAME: github-actions-tic-tac-toe
+          ITCH_USER: sohaibkhiaf
+          PACKAGE: tic-tac-toe-project/dist
+
