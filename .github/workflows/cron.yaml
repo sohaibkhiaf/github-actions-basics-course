@@ -3,8 +3,6 @@
 name: Cron example
 
 on: 
-  schedule:
-    - cron: '* * * * *' 
   workflow_dispatch:
 
 jobs: 
