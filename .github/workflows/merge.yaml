@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Merge example
+
+on: 
+  push:
+    branches:
+      - master
+    paths:
+      - typescript-project/**
+  workflow_dispatch:
+
+jobs: 
+  merge:
+    runs-on: ubuntu-latest 
+
+    defaults:
+      run:
+        working-directory: typescript-project
+
+    steps: 
+      - uses: actions/checkout@v2
+
+      # Setup Node.js 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: typescript-project/yarn.lock
+
+      # Install yarn
+      - name: Install yarn
+        run: npm install --global yarn
+
+      # Install libraries
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # Run linting
+      - name: Run linting 
+        run: yarn lint
+
+      # Compile the code 
+      - name: Build project
+        run: yarn build
+
+      # Run tests
+      - name: Run tests
+        run: yarn test
+
+      - run:  git config user.email "sohaibkhiaf@gmail.com
+      - run: git config user.name "Sohaib Khiaf"
+
+      - run: yarn version --patch --message "Bump version to %s"
+
+      - run: git push 
+
+      - run: git push --follow-tags
+
+      
+
