@@ -90,3 +90,8 @@ You can also leave comments on the videos, or open an issue.
 This course is free and is also hosted on YouTube. You can find the playlist here: [Learn JavaScript](https://www.youtube.com/playlist?list=PLmcXe0-sfoSgHQRKVWeJuIldauc9dL4rR).
 
 The course content can be found here: [GitHub - Learn JavaScript Course](https://github.com/scottwestover/learn-javascript-course).
+
+
+
+
+
