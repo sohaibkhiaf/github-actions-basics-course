@@ -3,6 +3,11 @@
 name: Pull request example
 
 on: 
+  pull_request:
+    branches:
+      - master
+    paths:
+      - typescript-project/**
   workflow_dispatch:
 
 jobs: 
