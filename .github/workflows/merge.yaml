@@ -10,6 +10,9 @@ on:
       - typescript-project/**
   workflow_dispatch:
 
+# permissions:
+#   contents: write  
+
 jobs: 
   merge:
     runs-on: ubuntu-latest 
@@ -50,7 +53,7 @@ jobs:
         run: yarn test
 
       - run:  git config user.email "sohaibkhiaf@gmail.com"
-      - run: git config user.name "Sohaib Khiaf"
+      - run: git config user.name "@github-ci"
 
       - run: yarn version --patch --message "Bump version to %s"
 
