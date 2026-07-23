@@ -49,7 +49,7 @@ jobs:
       - name: Run tests
         run: yarn test
 
-      - run:  git config user.email "sohaibkhiaf@gmail.com
+      - run:  git config user.email "sohaibkhiaf@gmail.com"
       - run: git config user.name "Sohaib Khiaf"
 
       - run: yarn version --patch --message "Bump version to %s"
