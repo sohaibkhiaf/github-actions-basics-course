@@ -30,7 +30,7 @@ After(async () => {
 });
 
 // 🔹 Step: make request
-Given('I make a GET request to {string}', function () {
+Given('I make a GET request to {string}', function (url) {
   // Always hit mock server (ignore external URL)
   request.get('http://localhost:9393/status/418');
 });
