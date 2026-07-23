@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 jobs: 
-  
   pull-request:
     runs-on: ubuntu-latest 
 
@@ -18,11 +17,11 @@ jobs:
       - uses: actions/checkout@v2
 
       # Setup Node.js 
-      - name: Setup Node.js 16
-        uses: actions/setup-node@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          cache: 'npm'
+          node-version: '18'
+          cache: 'yarn'
 
       # Install yarn
       - name: Install yarn
