@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Cron example
+
+on: 
+  workflow_dispatch:
+
+jobs: 
+  run-integration-tests:
+    runs-on: ubuntu-latest 
+
+    defaults:
+      run:
+        working-directory: cron-example
+
+    steps: 
+      - uses: actions/checkout@v2
+
+      # Setup Node.js 
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      # Install yarn
+      - name: Install yarn
+        run: npm install --global yarn
+
+      # Install libraries
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # Run tests
+      - name: Run tests
+        run: yarn test
+
